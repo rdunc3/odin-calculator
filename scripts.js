@@ -43,7 +43,7 @@ function createNumBtns() {
     for (let i = 0; i < 3; i++){
         const btnNum = document.createElement('button');
         btnNum.classList.add('btnNum');
-        btnNum.textContent = i == 1 ? 0 : ".";
+        btnNum.textContent = i == 1 ? 0 : "clear";
         row.appendChild(btnNum);
     }
     numbers.appendChild(row);
