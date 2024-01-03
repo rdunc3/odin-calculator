@@ -65,11 +65,12 @@ function btnClick(event){
     const clickedButton = event.target.textContent;
 
     console.log('Button clicked:', clickedButton);
-    return clickedButton;
+    changeDisplay(clickedButton);
 }
 
-function display(){
-    
+function changeDisplay(content){
+    const displayElement = document.querySelector('#display');
+    displayElement.textContent = content;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
