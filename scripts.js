@@ -60,11 +60,30 @@ function createOpBtns(){
     }
 }
 
+function btnClick(event){
+    // Get the clicked button
+    const clickedButton = event.target.textContent;
+
+    console.log('Button clicked:', clickedButton);
+    return clickedButton;
+}
+
+function display(){
+    
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    //Display
     let num1, op, num2;
 
-    //Create the buttons
+    // Create the buttons
     createNumBtns();
     createOpBtns();
+
+    // Select the buttons after they have been created
+    const buttons = document.querySelectorAll('.btnNum, .btnOp');
+
+    // Add event listener to each button
+    buttons.forEach(button => {
+        button.addEventListener('click', btnClick);
+    });
 });
