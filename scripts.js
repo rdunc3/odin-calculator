@@ -72,10 +72,15 @@ function btnClick(event){
     
     //Evaluate expression
     if (ops.indexOf(clickedButton) >= 0) numOps++;
-    if (clickedButton == '=' || numOps >= 2){
+    if (clickedButton == '='){
         numOps = 0;
-        changeDisplay(evaluateExpression());
+        changeDisplay(operate());
     }
+    else if (numOps >= 2){
+        numOps = 1;
+        changeDisplay(operate(clickedButton));
+    }
+    console.log("numOps = " + numOps);
 }
 
 function changeDisplay(content){
@@ -89,11 +94,11 @@ function clearDisplay(){
     displayElement.textContent = "";
 }
 
-function evaluateExpression(){
+function operate(operand){
     const displayElement = document.querySelector('#display');
     let content = displayElement.textContent;
     const match = content.match(/(-?\d+(\.\d+)?)([-+*/])(-?\d+(\.\d+)?)/);
- clearDisplay();
+    clearDisplay();
 
     if (match) {
         const num1 = parseFloat(match[1] + (match[2] || ''));
@@ -122,7 +127,7 @@ function evaluateExpression(){
         }
     
         console.log(result);
-        return result;
+        return arguments.length == 0 ? result : result + operand
     } else {
         console.error("Invalid expression format");
         return null;
