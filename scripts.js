@@ -81,10 +81,10 @@ function btnClick(event){
 function changeDisplay(content){
     const displayElement = document.querySelector('#display');
     if (content != 'clear') displayElement.textContent += content;
-    else displayElement.textContent = "";
+    else clearDisplay();
 }
 
-function wipeDisplay(){
+function clearDisplay(){
     const displayElement = document.querySelector('#display');
     displayElement.textContent = "";
 }
@@ -93,7 +93,7 @@ function evaluateExpression(){
     const displayElement = document.querySelector('#display');
     let content = displayElement.textContent;
     const match = content.match(/(-?\d+(\.\d+)?)([-+*/])(-?\d+(\.\d+)?)/);
-    wipeDisplay();
+ clearDisplay();
 
     if (match) {
         const num1 = parseFloat(match[1] + (match[2] || ''));
