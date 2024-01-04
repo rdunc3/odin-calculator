@@ -71,11 +71,11 @@ function btnClick(event){
     changeDisplay(clickedButton);
     
     //Evaluate expression
-    if (clickedButton == '=' || numOps == 2){
+    if (ops.indexOf(clickedButton) >= 0) numOps++;
+    if (clickedButton == '=' || numOps >= 2){
         numOps = 0;
         changeDisplay(evaluateExpression());
     }
-    else if (ops.indexOf(clickedButton) >= 0) numOps++;
 }
 
 function changeDisplay(content){
@@ -84,10 +84,16 @@ function changeDisplay(content){
     else displayElement.textContent = "";
 }
 
+function wipeDisplay(){
+    const displayElement = document.querySelector('#display');
+    displayElement.textContent = "";
+}
+
 function evaluateExpression(){
     const displayElement = document.querySelector('#display');
     let content = displayElement.textContent;
     const match = content.match(/(-?\d+(\.\d+)?)([-+*/])(-?\d+(\.\d+)?)/);
+    wipeDisplay();
 
     if (match) {
         const num1 = parseFloat(match[1] + (match[2] || ''));
@@ -121,7 +127,6 @@ function evaluateExpression(){
         console.error("Invalid expression format");
         return null;
     }
-
 }
 
 document.addEventListener('DOMContentLoaded', function() {
