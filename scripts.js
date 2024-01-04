@@ -19,13 +19,6 @@ function div(num1, num2){
     return num1 / num2;
 }
 
-function operate(num1, op, num2){
-    if (op == "+")return add(num1, num2);
-    else if (op == "-")return sub(num1, num2);
-    else if (op == "*")return mult(num1, num2);
-    else if (op == "/")return div(num1, num2);
-}
-
 function createNumBtns() {
     const numbers = document.querySelector('#buttons .numbers');
     for (let i = 2; i >= 0; i--) {
@@ -86,7 +79,10 @@ function btnClick(event){
 function changeDisplay(content){
     const displayElement = document.querySelector('#display');
     if (content != 'clear') displayElement.textContent += content;
-    else clearDisplay();
+    else {
+        clearDisplay();
+        numOps = 0;
+    }
 }
 
 function clearDisplay(){
