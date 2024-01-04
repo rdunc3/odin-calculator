@@ -1,3 +1,7 @@
+const ops = ['+', '-', '*', '/', '=']
+let num1 = op = num2 = null;
+let numOps = 0;
+
 //Calculator functions
 function add(num1, num2){
     return num1 + num2;
@@ -51,7 +55,6 @@ function createNumBtns() {
 
 function createOpBtns(){
     const operators = document.querySelector('#buttons .operators');
-    const ops = ['+', '-', '*', '/', '=']
     for (let i = 0; i < ops.length; i++) {
         const btnOp = document.createElement('button');
         btnOp.classList.add('btnOp');
@@ -66,16 +69,62 @@ function btnClick(event){
 
     console.log('Button clicked:', clickedButton);
     changeDisplay(clickedButton);
+    
+    //Evaluate expression
+    if (clickedButton == '=' || numOps == 2){
+        numOps = 0;
+        changeDisplay(evaluateExpression());
+    }
+    else if (ops.indexOf(clickedButton) >= 0) numOps++;
 }
 
 function changeDisplay(content){
     const displayElement = document.querySelector('#display');
-    displayElement.textContent = content;
+    if (content != 'clear') displayElement.textContent += content;
+    else displayElement.textContent = "";
+}
+
+function evaluateExpression(){
+    const displayElement = document.querySelector('#display');
+    let content = displayElement.textContent;
+    const match = content.match(/(-?\d+(\.\d+)?)([-+*/])(-?\d+(\.\d+)?)/);
+
+    if (match) {
+        const num1 = parseFloat(match[1] + (match[2] || ''));
+        const op = match[3];
+        const num2 = parseFloat(match[4] + (match[5] || ''));
+    
+        // Perform the calculation based on the operator
+        let result;
+    
+        switch (op) {
+            case '+':
+                result = add(num1,num2);
+                break;
+            case '-':
+                result = sub(num1,num2);
+                break;
+            case '*':
+                result = mult(num1,num2);
+                break;
+            case '/':
+                result = div(num1,num2);
+                break;
+            default:
+                console.error("Invalid operator");
+                return null;
+        }
+    
+        console.log(result);
+        return result;
+    } else {
+        console.error("Invalid expression format");
+        return null;
+    }
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    let num1, op, num2;
-
     // Create the buttons
     createNumBtns();
     createOpBtns();
